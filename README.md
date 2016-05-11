@@ -54,7 +54,7 @@ app.each(config)
 
 ## API
 
-### [.each](index.js#L44)
+### [.each](index.js#L45)
 
 Iterate over an array of `files` objects in a declarative configuration, optionally run them through a plugin pipline, then write the files to the file system.
 
@@ -80,7 +80,7 @@ generate.each({files: [config]})
   });
 ```
 
-### [.eachSeries](index.js#L84)
+### [.eachSeries](index.js#L85)
 
 Generate `files` configurations in series.
 
@@ -100,7 +100,7 @@ generate.eachSeries({files: [config]}, function(err) {
 });
 ```
 
-### [.eachStream](index.js#L120)
+### [.eachStream](index.js#L121)
 
 Generate `files` configurations in parallel.
 
