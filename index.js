@@ -9,6 +9,7 @@
 
 var async = require('async');
 var debug = require('debug')('base-files-each');
+var files = require('base-files-process');
 var merge = require('mixin-deep');
 var ms = require('merge-stream');
 
@@ -42,7 +43,7 @@ module.exports = function(config) {
      */
 
     this.define('each', function(config, options, cb) {
-      verifyPlugins(app);
+      this.use(files());
 
       if (typeof options === 'function') {
         cb = options;
@@ -82,7 +83,7 @@ module.exports = function(config) {
      */
 
     this.define('eachSeries', function(config, options, cb) {
-      verifyPlugins(app);
+      this.use(files());
 
       if (typeof options === 'function') {
         cb = options;
@@ -118,7 +119,7 @@ module.exports = function(config) {
      */
 
     this.define('eachStream', function(config, options) {
-      verifyPlugins(app);
+      this.use(files());
 
       config = merge({options: {data: {}}, data: {}}, config);
       options = merge({}, config.options, options);
@@ -138,9 +139,3 @@ module.exports = function(config) {
     });
   };
 };
-
-function verifyPlugins(app) {
-  if (typeof app.process !== 'function') {
-    throw new Error('expected the base-files-process plugin to be registered');
-  }
-}

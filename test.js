@@ -13,6 +13,7 @@ var option = require('base-option');
 var data = require('base-data');
 var vfs = require('base-fs');
 var App = require('base');
+var each = require('./');
 var scaffold;
 var config;
 var app;
@@ -55,7 +56,7 @@ describe('process()', function() {
     app.use(vfs());
     app.use(pipeline());
     app.use(files());
-    app.use(require('./')());
+    app.use(each());
     rimraf(actual, cb);
   });
 
@@ -80,7 +81,7 @@ describe('.each', function() {
     app.use(vfs());
     app.use(pipeline());
     app.use(files());
-    app.use(require('./')());
+    app.use(each());
     rimraf(actual, cb);
   });
 
@@ -296,7 +297,7 @@ describe('.eachSeries', function() {
     app.use(vfs());
     app.use(pipeline());
     app.use(files());
-    app.use(require('./')());
+    app.use(each());
     rimraf(actual, cb);
   });
 
@@ -336,7 +337,7 @@ describe('.eachStream', function() {
     app.use(vfs());
     app.use(pipeline());
     app.use(files());
-    app.use(require('./')());
+    app.use(each());
     rimraf(actual, cb);
   });
 
