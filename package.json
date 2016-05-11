@@ -1,7 +1,7 @@
 {
   "name": "base-files-each",
   "description": "Base plugin for iterating over an array of 'files' objects in a declarative configuration and writing them to the file system.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/node-base/base-files-each",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "node-base/base-files-each",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "async": "^1.5.2",
+    "base-files-process": "^0.1.0",
     "debug": "^2.2.0",
     "merge-stream": "^1.0.0",
     "mixin-deep": "^1.1.3"
@@ -28,7 +29,6 @@
   "devDependencies": {
     "base": "^0.8.1",
     "base-data": "^0.4.4",
-    "base-files-process": "^0.1.0",
     "base-fs": "^0.3.1",
     "base-option": "^0.7.0",
     "base-pipeline": "^0.2.5",
