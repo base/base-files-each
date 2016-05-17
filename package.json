@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "utils.js"
   ],
   "main": "index.js",
   "engines": {
@@ -20,9 +21,13 @@
     "test": "mocha"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async-each": "^1.0.0",
+    "async-each-series": "^1.1.0",
     "base-files-process": "^0.1.0",
     "debug": "^2.2.0",
+    "is-registered": "^0.1.4",
+    "is-valid-instance": "^0.1.0",
+    "lazy-cache": "^2.0.1",
     "merge-stream": "^1.0.0",
     "mixin-deep": "^1.1.3"
   },

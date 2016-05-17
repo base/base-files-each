@@ -7,16 +7,14 @@
 
 'use strict';
 
-var async = require('async');
 var debug = require('debug')('base-files-each');
-var files = require('base-files-process');
-var merge = require('mixin-deep');
-var ms = require('merge-stream');
+var utils = require('./utils');
 
 module.exports = function(config) {
   return function(app) {
-    if (!this.isApp || this.isRegistered('base-files-each')) return;
+    if (!isValid(this)) return;
     debug('initializing "%s", from "%s"', __filename, module.parent.id);
+    this.use(utils.files());
 
     /**
      * Iterate over an array of `files` objects in a declarative configuration, optionally
@@ -43,7 +41,6 @@ module.exports = function(config) {
      */
 
     this.define('each', function(config, options, cb) {
-      this.use(files());
 
       if (typeof options === 'function') {
         cb = options;
@@ -54,10 +51,10 @@ module.exports = function(config) {
         return app.eachStream.call(app, config, options);
       }
 
-      config = merge({options: {data: {}}, data: {}}, config);
-      options = merge({}, config.options, options);
+      config = utils.merge({options: {data: {}}, data: {}}, config);
+      options = utils.merge({}, config.options, options);
 
-      async.each(config.files, function(files, next) {
+      utils.each(config.files, function(files, next) {
         app.process(files, options)
           .on('error', next)
           .on('end', next);
@@ -83,17 +80,15 @@ module.exports = function(config) {
      */
 
     this.define('eachSeries', function(config, options, cb) {
-      this.use(files());
-
       if (typeof options === 'function') {
         cb = options;
         options = {};
       }
 
-      config = merge({options: {data: {}}, data: {}}, config);
-      options = merge({}, config.options, options);
+      config = utils.merge({options: {data: {}}, data: {}}, config);
+      options = utils.merge({}, config.options, options);
 
-      async.eachSeries(config.files, function(files, next) {
+      utils.eachSeries(config.files, function(files, next) {
         app.process(files, options)
           .on('error', next)
           .on('end', next);
@@ -119,10 +114,8 @@ module.exports = function(config) {
      */
 
     this.define('eachStream', function(config, options) {
-      this.use(files());
-
-      config = merge({options: {data: {}}, data: {}}, config);
-      options = merge({}, config.options, options);
+      config = utils.merge({options: {data: {}}, data: {}}, config);
+      options = utils.merge({}, config.options, options);
 
       var streams = [];
 
@@ -130,7 +123,7 @@ module.exports = function(config) {
         streams.push(app.process(files, options));
       });
 
-      var stream = ms.apply(ms, streams);
+      var stream = utils.ms.apply(utils.ms, streams);
       stream.on('finish', function() {
         if (stream._events.data) return;
         stream.emit.bind(stream, 'end').apply(stream, arguments);
@@ -139,3 +132,13 @@ module.exports = function(config) {
     });
   };
 };
+
+function isValid(app) {
+  if (!utils.isValidInstance(app)) {
+    return false;
+  }
+  if (utils.isRegistered(app, 'base-files-each')) {
+    return false;
+  }
+  return true;
+}
