@@ -125,8 +125,7 @@ generate.eachStream({files: [config]}, options)
 
 You might also be interested in these projects:
 
-[base-files-process](https://www.npmjs.com/package/base-files-process): Plugin for processing files from a declarative configuration. | [homepage](https://github.com/node-base/base-files-process)
-
+* [base-files-process](https://www.npmjs.com/package/base-files-process): Plugin for processing files from a declarative configuration. | [homepage](https://github.com/node-base/base-files-process)
 * [base-fs](https://www.npmjs.com/package/base-fs): base-methods plugin that adds vinyl-fs methods to your 'base' application for working with the file… [more](https://www.npmjs.com/package/base-fs) | [homepage](https://github.com/node-base/base-fs)
 * [base-pipeline](https://www.npmjs.com/package/base-pipeline): base-methods plugin that adds pipeline and plugin methods for dynamically composing streaming plugin pipelines. | [homepage](https://github.com/node-base/base-pipeline)
 * [base-task](https://www.npmjs.com/package/base-task): base plugin that provides a very thin wrapper around [https://github.com/doowb/composer](https://github.com/doowb/composer) for adding task methods to… [more](https://www.npmjs.com/package/base-task) | [homepage](https://github.com/node-base/base-task)
