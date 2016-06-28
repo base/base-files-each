@@ -52,10 +52,10 @@ module.exports = function(config) {
       }
 
       config = utils.merge({options: {data: {}}, data: {}}, config);
-      options = utils.merge({}, config.options, options);
+      var opts = utils.merge({}, config.options, options);
 
       utils.each(config.files, function(files, next) {
-        app.process(files, options)
+        app.process(files, utils.merge({}, opts, files.options, options))
           .on('error', next)
           .on('end', next);
       }, cb);
@@ -86,10 +86,10 @@ module.exports = function(config) {
       }
 
       config = utils.merge({options: {data: {}}, data: {}}, config);
-      options = utils.merge({}, config.options, options);
+      var opts = utils.merge({}, config.options, options);
 
       utils.eachSeries(config.files, function(files, next) {
-        app.process(files, options)
+        app.process(files, utils.merge({}, opts, files.options, options))
           .on('error', next)
           .on('end', next);
       }, cb);
@@ -115,12 +115,12 @@ module.exports = function(config) {
 
     this.define('eachStream', function(config, options) {
       config = utils.merge({options: {data: {}}, data: {}}, config);
-      options = utils.merge({}, config.options, options);
+      var opts = utils.merge({}, config.options, options);
 
       var streams = [];
 
       config.files.forEach(function(files) {
-        streams.push(app.process(files, options));
+        streams.push(app.process(files, utils.merge({}, opts, files.options, options)));
       });
 
       var stream = utils.ms.apply(utils.ms, streams);
