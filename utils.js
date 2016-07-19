@@ -10,8 +10,7 @@ require = utils;
 
 require('async-each', 'each');
 require('async-each-series', 'eachSeries');
-require('is-valid-instance');
-require('is-registered');
+require('is-valid-app', 'isValid');
 require('base-files-process', 'files');
 require('mixin-deep', 'merge');
 require('merge-stream', 'ms');

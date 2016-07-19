@@ -12,8 +12,12 @@ var utils = require('./utils');
 
 module.exports = function(config) {
   return function(app) {
-    if (!isValid(this)) return;
-    debug('initializing "%s", from "%s"', __filename, module.parent.id);
+    if (!utils.isValid(app, 'base-files-each')) return;
+
+    /**
+     * Plugins
+     */
+
     this.use(utils.files());
 
     /**
@@ -41,25 +45,14 @@ module.exports = function(config) {
      */
 
     this.define('each', function(config, options, cb) {
-
       if (typeof options === 'function') {
         cb = options;
         options = {};
       }
-
       if (typeof cb !== 'function') {
-        return app.eachStream.call(app, config, options);
+        return app.eachStream(config, options);
       }
-
-      config = utils.merge({options: {data: {}}, data: {}}, config);
-      var opts = utils.merge({}, config.options, options);
-
-      utils.each(config.files, function(files, next) {
-        app.process(files, utils.merge({}, opts, files.options, options))
-          .on('error', next)
-          .on('end', next);
-      }, cb);
-      return app;
+      return app.eachSeries(config, options, cb);
     });
 
     /**
@@ -85,11 +78,11 @@ module.exports = function(config) {
         options = {};
       }
 
-      config = utils.merge({options: {data: {}}, data: {}}, config);
-      var opts = utils.merge({}, config.options, options);
+      config.options = utils.merge({data: {}}, config.options);
 
       utils.eachSeries(config.files, function(files, next) {
-        app.process(files, utils.merge({}, opts, files.options, options))
+        var opts = utils.merge({}, config.options, files.options, options);
+        app.processFiles(files, opts)
           .on('error', next)
           .on('end', next);
       }, cb);
@@ -114,13 +107,12 @@ module.exports = function(config) {
      */
 
     this.define('eachStream', function(config, options) {
-      config = utils.merge({options: {data: {}}, data: {}}, config);
-      var opts = utils.merge({}, config.options, options);
-
+      config.options = utils.merge({data: {}}, config.options);
       var streams = [];
 
       config.files.forEach(function(files) {
-        streams.push(app.process(files, utils.merge({}, opts, files.options, options)));
+        var opts = utils.merge({}, config.options, files.options, options);
+        streams.push(app.processFiles(files, opts));
       });
 
       var stream = utils.ms.apply(utils.ms, streams);
@@ -132,13 +124,3 @@ module.exports = function(config) {
     });
   };
 };
-
-function isValid(app) {
-  if (!utils.isValidInstance(app)) {
-    return false;
-  }
-  if (utils.isRegistered(app, 'base-files-each')) {
-    return false;
-  }
-  return true;
-}
