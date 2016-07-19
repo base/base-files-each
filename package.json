@@ -11,6 +11,8 @@
   "license": "MIT",
   "files": [
     "index.js",
+    "LICENSE",
+    "README.md",
     "utils.js"
   ],
   "main": "index.js",
@@ -25,8 +27,7 @@
     "async-each-series": "^1.1.0",
     "base-files-process": "^0.1.3",
     "debug": "^2.2.0",
-    "is-registered": "^0.1.5",
-    "is-valid-instance": "^0.2.0",
+    "is-valid-app": "^0.2.0",
     "lazy-cache": "^2.0.1",
     "merge-stream": "^1.0.0",
     "mixin-deep": "^1.1.3"
@@ -44,13 +45,25 @@
     "through2": "^2.0.1"
   },
   "keywords": [
+    "api",
+    "app",
+    "application",
     "base",
     "baseplugin",
+    "building-blocks",
     "config",
+    "create",
     "declarative",
+    "each",
     "files",
+    "framework",
     "fs",
-    "pipeline"
+    "pipeline",
+    "plugin",
+    "plugins",
+    "tool",
+    "toolkit",
+    "tools"
   ],
   "verb": {
     "toc": false,
